@@ -30,6 +30,7 @@ const Login = () => {
       identity: '',
       password: '',
    });
+   console.log('am i good');
    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       setState({
          ...state,

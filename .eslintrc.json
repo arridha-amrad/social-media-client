@@ -20,7 +20,7 @@
    "rules": {
       "react/react-in-jsx-scope": "off",
       "require-jsdoc": "off",
-      "no-console": "off",
+      "no-console": 1,
       "prettier/prettier": "error"
    },
    "settings": {
