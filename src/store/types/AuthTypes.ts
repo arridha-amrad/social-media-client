@@ -18,19 +18,19 @@ export const SET_AUTH_MESSAGE = 'SET_AUTH_MESSAGE';
 export const UNSET_AUTH_MESSAGE = 'UNSET_AUTH_MESSAGE';
 
 export type AuthActionsType =
-   | { type: typeof UNSET_BLOCKED }
-   | { type: typeof UPLOAD_AVATAR; payload: string }
-   | { type: typeof RESET_AUTH_USER }
-   | { type: typeof AUTHENTICATED_USER_DATA; payload: AuthenticatedUserData }
-   | { type: typeof REDIRECT_TO_LOGIN }
-   | { type: typeof AUTH_SUCCESS }
-   | { type: typeof AUTH_ERROR }
-   | { type: typeof LOGIN_SUCCESS }
-   | { type: typeof LOADING_AUTH }
-   | { type: typeof STOP_LOADING_AUTH }
-   | { type: typeof LOGOUT }
-   | { type: typeof SET_UNAUTHENTICATED }
-   | { type: typeof SET_AUTHENTICATED; payload: AuthenticatedUserData }
-   | { type: typeof SET_AUTH_MESSAGE; payload: string }
-   | { type: typeof UNSET_AUTH_MESSAGE }
-   | { type: typeof RESET_REQUEST_STATUS };
+  | { type: typeof UNSET_BLOCKED }
+  | { type: typeof UPLOAD_AVATAR; payload: string }
+  | { type: typeof RESET_AUTH_USER }
+  | { type: typeof AUTHENTICATED_USER_DATA; payload: AuthenticatedUserData }
+  | { type: typeof REDIRECT_TO_LOGIN }
+  | { type: typeof AUTH_SUCCESS }
+  | { type: typeof AUTH_ERROR }
+  | { type: typeof LOGIN_SUCCESS }
+  | { type: typeof LOADING_AUTH }
+  | { type: typeof STOP_LOADING_AUTH }
+  | { type: typeof LOGOUT }
+  | { type: typeof SET_UNAUTHENTICATED }
+  | { type: typeof SET_AUTHENTICATED; payload: AuthenticatedUserData }
+  | { type: typeof SET_AUTH_MESSAGE; payload: string }
+  | { type: typeof UNSET_AUTH_MESSAGE }
+  | { type: typeof RESET_REQUEST_STATUS };

@@ -6,11 +6,13 @@ import ProtectedRoute from './components/ProtectedRoute';
 import { Home, Login, Register } from './pages';
 import PostDetail from './pages/PostDetail';
 import { AuthActionsType } from './store/types/AuthTypes';
+import { NotificationActionTypes } from './store/types/NotificationTypes';
 import axiosInstance from './utils/AxiosInterceptor';
 
 const App = () => {
   const [isMounted, setIsMounted] = useState(true);
-  const dispatch = useDispatch<Dispatch<AuthActionsType>>();
+  const dispatch =
+    useDispatch<Dispatch<AuthActionsType | NotificationActionTypes>>();
   const [isLoading, setIsLoading] = useState(true);
   const fetchUser = async () => {
     try {
@@ -20,7 +22,11 @@ const App = () => {
       if (isMounted) {
         dispatch({
           type: 'SET_AUTHENTICATED',
-          payload: data,
+          payload: data.user,
+        });
+        dispatch({
+          type: 'SET_NOTIFICATIONS',
+          payload: data.notifications,
         });
       }
     } catch (err) {
@@ -38,7 +44,7 @@ const App = () => {
       setIsMounted(false);
     };
     // eslint-disable-next-line
-   }, []);
+  }, []);
   if (isLoading) {
     return (
       <Box

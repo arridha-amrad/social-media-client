@@ -1,8 +1,13 @@
 import { Box, Tooltip, Text } from '@chakra-ui/react';
 import { useState } from 'react';
+import { useSelector } from 'react-redux';
+import { RootState } from '../store';
 import NotificationList from './NotificationList';
 
 const NotificationButton = () => {
+  const { notifications } = useSelector(
+    (state: RootState) => state.notifications
+  );
   const [isOpen, setIsOpen] = useState(false);
   return (
     <Box position="relative">
@@ -24,13 +29,13 @@ const NotificationButton = () => {
             borderRadius="full"
           >
             <Text fontWeight="bold" color="white">
-              5
+              {notifications.length}
             </Text>
           </Box>
           <i className="fas fa-bell fa-2x"></i>
         </Box>
       </Tooltip>
-      {isOpen && <NotificationList />}
+      {isOpen && <NotificationList notifications={notifications} />}
     </Box>
   );
 };

@@ -1,6 +1,7 @@
 import { createStore, applyMiddleware, compose, combineReducers } from 'redux';
 import thunkMiddleware from 'redux-thunk';
 import AuthReducer from './reducers/AuthReducer';
+import NotificationReducer from './reducers/NotificationReducer';
 import PostReducer from './reducers/PostReducer';
 
 const initialState = {};
@@ -10,6 +11,7 @@ const middleware = [thunkMiddleware];
 const reducers = combineReducers({
   auth: AuthReducer,
   posts: PostReducer,
+  notifications: NotificationReducer,
 });
 
 export type RootState = ReturnType<typeof reducers>;
