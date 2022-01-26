@@ -2,6 +2,7 @@ import {
   Avatar,
   Box,
   Container,
+  Flex,
   Menu,
   MenuButton,
   MenuList,
@@ -10,12 +11,14 @@ import {
 import { useSelector } from 'react-redux';
 import { RootState } from '../store';
 import Logout from './Logout';
+import NotificationButton from './NotificationButton';
 
 const Navbar = () => {
   const { authenticatedUser } = useSelector((state: RootState) => state.auth);
   return (
     <Box h="20" bg="whitesmoke">
       <Container
+        maxW="container.lg"
         height="100%"
         d="flex"
         alignItems="center"
@@ -27,16 +30,19 @@ const Navbar = () => {
             Social Media
           </Text>
         </Box>
-        <Box>
-          <Menu>
-            <MenuButton>
-              <Avatar src={authenticatedUser?.avatarURL} />
-            </MenuButton>
-            <MenuList>
-              <Logout />
-            </MenuList>
-          </Menu>
-        </Box>
+        <Flex alignItems="center" gap="20">
+          <NotificationButton />
+          <Box>
+            <Menu>
+              <MenuButton>
+                <Avatar src={authenticatedUser?.avatarURL} />
+              </MenuButton>
+              <MenuList>
+                <Logout />
+              </MenuList>
+            </Menu>
+          </Box>
+        </Flex>
       </Container>
     </Box>
   );
