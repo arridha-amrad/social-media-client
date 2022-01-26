@@ -5,49 +5,47 @@ import { ADD_POST, PostActionTypes } from '../store/types/PostTypes';
 import axiosInstance from '../utils/AxiosInterceptor';
 
 const CreatePost = () => {
-   const ref = useRef<HTMLTextAreaElement>(null);
-   const [state, setState] = useState({
-      description: '',
-   });
-   const dispatch = useDispatch<Dispatch<PostActionTypes>>();
-   const handleCreatePost = async () => {
-      try {
-         const { data } = await axiosInstance.post('/api/post', state);
-         dispatch({
-            type: ADD_POST,
-            payload: data.post,
-         });
-         setState({ description: '' });
-         ref.current!.value = '';
-      } catch (err) {
-         console.log(err);
-      }
-   };
-   return (
-      <Box mt="5">
-         <FormControl>
-            <Textarea
-               ref={ref}
-               onChange={(e) =>
-                  setState({ ...state, description: e.target.value })
-               }
-               resize="none"
-               height="5"
-               placeholder="write your post..."
-            />
-            <Box mt="2" d="flex" justifyContent="end">
-               <Button
-                  isDisabled={state.description.trim() === ''}
-                  w="60"
-                  colorScheme="blue"
-                  onClick={handleCreatePost}
-               >
-                  Post
-               </Button>
-            </Box>
-         </FormControl>
-      </Box>
-   );
+  const ref = useRef<HTMLTextAreaElement>(null);
+  const [state, setState] = useState({
+    description: '',
+  });
+  const dispatch = useDispatch<Dispatch<PostActionTypes>>();
+  const handleCreatePost = async () => {
+    try {
+      const { data } = await axiosInstance.post('/api/post', state);
+      dispatch({
+        type: ADD_POST,
+        payload: data.post,
+      });
+      setState({ description: '' });
+      ref.current!.value = '';
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  return (
+    <Box mt="5">
+      <FormControl>
+        <Textarea
+          ref={ref}
+          onChange={(e) => setState({ ...state, description: e.target.value })}
+          resize="none"
+          height="5"
+          placeholder="write your post..."
+        />
+        <Box mt="2" d="flex" justifyContent="end">
+          <Button
+            isDisabled={state.description.trim() === ''}
+            w="60"
+            colorScheme="blue"
+            onClick={handleCreatePost}
+          >
+            Post
+          </Button>
+        </Box>
+      </FormControl>
+    </Box>
+  );
 };
 
 export default CreatePost;

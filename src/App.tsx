@@ -9,59 +9,59 @@ import { AuthActionsType } from './store/types/AuthTypes';
 import axiosInstance from './utils/AxiosInterceptor';
 
 const App = () => {
-   const [isMounted, setIsMounted] = useState(true);
-   const dispatch = useDispatch<Dispatch<AuthActionsType>>();
-   const [isLoading, setIsLoading] = useState(true);
-   const fetchUser = async () => {
-      try {
-         dispatch({ type: 'LOADING_AUTH' });
-         await axiosInstance.get('/api/auth/refresh-token');
-         const { data } = await axiosInstance.get('/api/user/me');
-         if (isMounted) {
-            dispatch({
-               type: 'SET_AUTHENTICATED',
-               payload: data,
-            });
-         }
-      } catch (err) {
-         console.log(err);
-      } finally {
-         dispatch({ type: 'STOP_LOADING_AUTH' });
-         setTimeout(() => {
-            setIsLoading(false);
-         }, 2000);
+  const [isMounted, setIsMounted] = useState(true);
+  const dispatch = useDispatch<Dispatch<AuthActionsType>>();
+  const [isLoading, setIsLoading] = useState(true);
+  const fetchUser = async () => {
+    try {
+      dispatch({ type: 'LOADING_AUTH' });
+      await axiosInstance.get('/api/auth/refresh-token');
+      const { data } = await axiosInstance.get('/api/user/me');
+      if (isMounted) {
+        dispatch({
+          type: 'SET_AUTHENTICATED',
+          payload: data,
+        });
       }
-   };
-   useEffect(() => {
-      fetchUser();
-      return () => {
-         setIsMounted(false);
-      };
-      // eslint-disable-next-line
+    } catch (err) {
+      console.log(err);
+    } finally {
+      dispatch({ type: 'STOP_LOADING_AUTH' });
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 2000);
+    }
+  };
+  useEffect(() => {
+    fetchUser();
+    return () => {
+      setIsMounted(false);
+    };
+    // eslint-disable-next-line
    }, []);
-   if (isLoading) {
-      return (
-         <Box
-            d="flex"
-            h="100vh"
-            w="100%"
-            alignItems="center"
-            justifyContent="center"
-         >
-            <Spinner size="xl" />
-         </Box>
-      );
-   }
-   return (
-      <Routes>
-         <Route element={<ProtectedRoute />}>
-            <Route path="/" element={<Home />} />
-            <Route path="/post" element={<PostDetail />} />
-         </Route>
-         <Route path="/login" element={<Login />} />
-         <Route path="/register" element={<Register />} />
-      </Routes>
-   );
+  if (isLoading) {
+    return (
+      <Box
+        d="flex"
+        h="100vh"
+        w="100%"
+        alignItems="center"
+        justifyContent="center"
+      >
+        <Spinner size="xl" />
+      </Box>
+    );
+  }
+  return (
+    <Routes>
+      <Route element={<ProtectedRoute />}>
+        <Route path="/" element={<Home />} />
+        <Route path="/post" element={<PostDetail />} />
+      </Route>
+      <Route path="/login" element={<Login />} />
+      <Route path="/register" element={<Register />} />
+    </Routes>
+  );
 };
 
 export default App;

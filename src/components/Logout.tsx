@@ -6,20 +6,20 @@ import { useNavigate } from 'react-router-dom';
 import { Dispatch } from 'react';
 
 const Logout = () => {
-   const dispatch = useDispatch<Dispatch<AuthActionsType>>();
-   const navigate = useNavigate();
-   const handleLogout = async () => {
-      try {
-         await axiosInstance.post('/api/auth/logout');
-         dispatch({
-            type: 'SET_UNAUTHENTICATED',
-         });
-         navigate('/login');
-      } catch (err) {
-         console.log(err);
-      }
-   };
-   return <MenuItem onClick={handleLogout}>Logout</MenuItem>;
+  const dispatch = useDispatch<Dispatch<AuthActionsType>>();
+  const navigate = useNavigate();
+  const handleLogout = async () => {
+    try {
+      await axiosInstance.post('/api/auth/logout');
+      dispatch({
+        type: 'SET_UNAUTHENTICATED',
+      });
+      navigate('/login');
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  return <MenuItem onClick={handleLogout}>Logout</MenuItem>;
 };
 
 export default Logout;

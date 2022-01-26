@@ -7,14 +7,14 @@ import { Provider } from 'react-redux';
 import store from './store';
 
 ReactDOM.render(
-   <React.StrictMode>
-      <Provider store={store}>
-         <ChakraProvider>
-            <BrowserRouter>
-               <App />
-            </BrowserRouter>
-         </ChakraProvider>
-      </Provider>
-   </React.StrictMode>,
-   document.getElementById('root')
+  <React.StrictMode>
+    <Provider store={store}>
+      <ChakraProvider>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </ChakraProvider>
+    </Provider>
+  </React.StrictMode>,
+  document.getElementById('root')
 );
