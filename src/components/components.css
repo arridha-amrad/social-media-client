@@ -2,6 +2,11 @@
   color: pink !important;
 }
 
+.xs-icon {
+  font-size: .4rem;
+  color: rgb(0, 174, 255);
+}
+
 .small-icon {
   font-size: 0.7rem;
   cursor: pointer;

@@ -33,9 +33,7 @@ const App = () => {
       console.log(err);
     } finally {
       dispatch({ type: 'STOP_LOADING_AUTH' });
-      setTimeout(() => {
-        setIsLoading(false);
-      }, 2000);
+      setIsLoading(false);
     }
   };
   useEffect(() => {

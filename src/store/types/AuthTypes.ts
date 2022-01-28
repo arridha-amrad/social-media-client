@@ -1,4 +1,5 @@
-import { AuthenticatedUserData } from '../reducers/AuthReducer';
+import { User } from '../../interfacesAndTypes';
+
 export const LOADING_AUTH = 'LOADING_AUTH';
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 export const SET_AUTHENTICATED = 'SET_AUTHENTICATED';
@@ -21,7 +22,7 @@ export type AuthActionsType =
   | { type: typeof UNSET_BLOCKED }
   | { type: typeof UPLOAD_AVATAR; payload: string }
   | { type: typeof RESET_AUTH_USER }
-  | { type: typeof AUTHENTICATED_USER_DATA; payload: AuthenticatedUserData }
+  | { type: typeof AUTHENTICATED_USER_DATA; payload: User }
   | { type: typeof REDIRECT_TO_LOGIN }
   | { type: typeof AUTH_SUCCESS }
   | { type: typeof AUTH_ERROR }
@@ -30,7 +31,7 @@ export type AuthActionsType =
   | { type: typeof STOP_LOADING_AUTH }
   | { type: typeof LOGOUT }
   | { type: typeof SET_UNAUTHENTICATED }
-  | { type: typeof SET_AUTHENTICATED; payload: AuthenticatedUserData }
+  | { type: typeof SET_AUTHENTICATED; payload: User }
   | { type: typeof SET_AUTH_MESSAGE; payload: string }
   | { type: typeof UNSET_AUTH_MESSAGE }
   | { type: typeof RESET_REQUEST_STATUS };

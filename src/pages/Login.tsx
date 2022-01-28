@@ -12,8 +12,8 @@ import {
 import React, { Dispatch, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, Link } from 'react-router-dom';
+import { User } from '../interfacesAndTypes';
 import { RootState } from '../store';
-import { AuthenticatedUserData } from '../store/reducers/AuthReducer';
 import { AuthActionsType } from '../store/types/AuthTypes';
 import axiosInstance from '../utils/AxiosInterceptor';
 import getGoogleOauthURL from '../utils/GetGoogleOAuthURL';
@@ -41,7 +41,7 @@ const Login = () => {
   const handleLogin = async () => {
     try {
       const { data } = await axiosInstance.post<{
-        user: AuthenticatedUserData;
+        user: User;
       }>(`${process.env.REACT_APP_SERVER_URL}/api/auth/login`, state);
       dispatch({
         type: 'SET_AUTHENTICATED',
@@ -74,7 +74,7 @@ const Login = () => {
       navigate('/');
     }
     // eslint-disable-next-line
-   }, []);
+  }, []);
   const openGoogleOauth = () => {
     window.open(getGoogleOauthURL(), '_blank');
   };

@@ -7,14 +7,23 @@ import Posts from '../components/Posts';
 import axiosInstance from '../utils/AxiosInterceptor';
 import { PostActionTypes } from '../store/types/PostTypes';
 import { PostData } from '../store/reducers/PostReducer';
+import { io } from 'socket.io-client';
+import { SocketActionType } from '../store/reducers/SocketReducer';
+import { NotificationActionTypes } from '../store/types/NotificationTypes';
 
 const Home = () => {
   const {
     posts: { isLoadingPost, posts, isFetched },
+    auth: { isAuthenticated, isLoadingAuth, authenticatedUser },
+    socket,
   } = useSelector((state: RootState) => state);
 
   const [mounted, setIsMounted] = useState(true);
-  const dispatch = useDispatch<Dispatch<PostActionTypes>>();
+
+  const dispatch =
+    useDispatch<
+      Dispatch<PostActionTypes | SocketActionType | NotificationActionTypes>
+    >();
 
   const fetchPosts = async () => {
     try {
@@ -37,9 +46,32 @@ const Home = () => {
     if (!isFetched) {
       fetchPosts();
     }
-    return () => setIsMounted(false);
+    if (!isLoadingAuth && isAuthenticated) {
+      const socket = io('http://localhost:5000');
+      dispatch({
+        type: 'SET_SOCKET',
+        payload: socket,
+      });
+    }
+    return () => {
+      setIsMounted(false);
+      socket?.disconnect();
+    };
     // eslint-disable-next-line
   }, []);
+
+  useEffect(() => {
+    if (authenticatedUser?.username) {
+      socket?.emit('addUser', authenticatedUser.username);
+    }
+    socket?.on('likeAlert', (payload) => {
+      dispatch({
+        type: 'ADD_NOTIFICATION',
+        payload: payload,
+      });
+    });
+  }, [socket]);
+
   const loading = () => (
     <Flex w="100%" alignItems="center" justifyContent="center">
       <Spinner />

@@ -3,6 +3,7 @@ import thunkMiddleware from 'redux-thunk';
 import AuthReducer from './reducers/AuthReducer';
 import NotificationReducer from './reducers/NotificationReducer';
 import PostReducer from './reducers/PostReducer';
+import SocketReducer from './reducers/SocketReducer';
 
 const initialState = {};
 
@@ -12,6 +13,7 @@ const reducers = combineReducers({
   auth: AuthReducer,
   posts: PostReducer,
   notifications: NotificationReducer,
+  socket: SocketReducer,
 });
 
 export type RootState = ReturnType<typeof reducers>;

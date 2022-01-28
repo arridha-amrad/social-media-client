@@ -1,4 +1,6 @@
+import { User } from '../../interfacesAndTypes';
 import { NotificationActionTypes } from '../types/NotificationTypes';
+import { PostData } from './PostReducer';
 
 export interface NotificationSender {
   _id: string;
@@ -9,16 +11,16 @@ export interface NotificationSender {
 export type NotificationType = 'likeComment' | 'likePost' | 'commentPost';
 
 export interface Notification {
-  _id: string;
-  receiver: string;
-  sender: NotificationSender;
+  _id?: string;
+  receiver: User;
+  sender: User;
   type: NotificationType;
   isRead: boolean;
   isChecked: boolean;
-  postId: string;
-  commentId: string;
   createdAt: Date;
   updatedAt: Date;
+  post?: PostData;
+  comment?: Comment;
 }
 
 export interface NotificationState {
@@ -50,6 +52,11 @@ export default function NotificationReducer(
       return {
         ...state,
         notifications: action.payload,
+      };
+    case 'ADD_NOTIFICATION':
+      return {
+        ...state,
+        notifications: [...state.notifications, action.payload],
       };
     default:
       return state;

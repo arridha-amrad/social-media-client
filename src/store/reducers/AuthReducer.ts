@@ -1,17 +1,10 @@
+import { User } from '../../interfacesAndTypes';
 import { AuthActionsType } from '../types/AuthTypes';
-
-export interface AuthenticatedUserData {
-  _id: string;
-  email: string;
-  username: string;
-  fullName: string;
-  avatarURL: string;
-}
 
 export interface AuthState {
   isLoadingAuth: boolean;
   isAuthenticated: boolean;
-  authenticatedUser: AuthenticatedUserData | null;
+  authenticatedUser: User | null;
   authMessage: string | null;
 }
 

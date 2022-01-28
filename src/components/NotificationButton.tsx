@@ -17,25 +17,29 @@ const NotificationButton = () => {
           cursor="pointer"
           position="relative"
         >
-          <Box
-            position="absolute"
-            top="3"
-            right="4"
-            border="1px solid red"
-            textAlign="center"
-            w="7"
-            h="7"
-            bg="red"
-            borderRadius="full"
-          >
-            <Text fontWeight="bold" color="white">
-              {notifications.length}
-            </Text>
-          </Box>
+          {notifications.length > 0 && (
+            <Box
+              position="absolute"
+              top="3"
+              right="4"
+              border="1px solid red"
+              textAlign="center"
+              w="7"
+              h="7"
+              bg="red"
+              borderRadius="full"
+            >
+              <Text fontWeight="bold" color="white">
+                {notifications.length}
+              </Text>
+            </Box>
+          )}
           <i className="fas fa-bell fa-2x"></i>
         </Box>
       </Tooltip>
-      {isOpen && <NotificationList notifications={notifications} />}
+      {notifications.length > 0 && isOpen && (
+        <NotificationList notifications={notifications} />
+      )}
     </Box>
   );
 };
