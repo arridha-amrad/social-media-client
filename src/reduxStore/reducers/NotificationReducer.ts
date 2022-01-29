@@ -38,6 +38,7 @@ export default function NotificationReducer(
   state = initialState,
   action: NotificationActionTypes
 ): NotificationState {
+  const copy = [...state.notifications];
   switch (action.type) {
     case 'LOADING_NOTIFICATIONS':
       return {
@@ -56,13 +57,21 @@ export default function NotificationReducer(
       };
     case 'ADD_NOTIFICATION':
       const addNotification = () => {
-        const copy = [...state.notifications];
         copy.splice(0, 0, action.payload);
         return copy;
       };
       return {
         ...state,
         notifications: addNotification(),
+      };
+    case 'CHECK_NOTIFICATION':
+      const checkNotification = () => {
+        copy.forEach((notification) => (notification.isChecked = true));
+        return copy;
+      };
+      return {
+        ...state,
+        notifications: checkNotification(),
       };
     default:
       return state;

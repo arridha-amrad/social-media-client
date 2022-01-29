@@ -1,15 +1,18 @@
 import { MenuItem } from '@chakra-ui/react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { AuthActionsType } from '../reduxStore/reduxTypes/AuthTypes';
 import axiosInstance from '../utils/AxiosInterceptor';
 import { useNavigate } from 'react-router-dom';
 import { Dispatch } from 'react';
+import { RootState } from '../reduxStore';
 
 const Logout = () => {
   const dispatch = useDispatch<Dispatch<AuthActionsType>>();
   const navigate = useNavigate();
+  const { socket } = useSelector((state: RootState) => state);
   const handleLogout = async () => {
     try {
+      socket?.disconnect();
       await axiosInstance.post('/api/auth/logout');
       dispatch({
         type: 'SET_UNAUTHENTICATED',

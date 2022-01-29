@@ -15,12 +15,14 @@ import { useNavigate, Link } from 'react-router-dom';
 import { User } from '../interfacesAndTypes';
 import { RootState } from '../reduxStore';
 import { AuthActionsType } from '../reduxStore/reduxTypes/AuthTypes';
+import { NotificationActionTypes } from '../reduxStore/reduxTypes/NotificationTypes';
 import axiosInstance from '../utils/AxiosInterceptor';
 import getGoogleOauthURL from '../utils/GetGoogleOAuthURL';
 
 const Login = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch<Dispatch<AuthActionsType>>();
+  const dispatch =
+    useDispatch<Dispatch<AuthActionsType | NotificationActionTypes>>();
   const [message, setMessage] = useState('');
   const [urlNextParam, setURLNextParam] = useState('');
   const { isLoadingAuth, isAuthenticated, authMessage } = useSelector(
@@ -30,7 +32,6 @@ const Login = () => {
     identity: '',
     password: '',
   });
-  console.log('am i good');
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setState({
       ...state,
@@ -40,12 +41,17 @@ const Login = () => {
 
   const handleLogin = async () => {
     try {
-      const { data } = await axiosInstance.post<{
-        user: User;
-      }>(`${process.env.REACT_APP_SERVER_URL}/api/auth/login`, state);
+      const { data } = await axiosInstance.post(
+        `${process.env.REACT_APP_SERVER_URL}/api/auth/login`,
+        state
+      );
       dispatch({
         type: 'SET_AUTHENTICATED',
         payload: data.user,
+      });
+      dispatch({
+        type: 'SET_NOTIFICATIONS',
+        payload: data.notifications,
       });
       if (urlNextParam) {
         navigate(`${urlNextParam}`);

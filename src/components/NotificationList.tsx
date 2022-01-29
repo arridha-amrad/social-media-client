@@ -36,7 +36,7 @@ const NotificationList: FC<{ notifications: Notification[] }> = ({
             <Flex justifyContent="space-between">
               <Flex mb="2" alignItems={'center'}>
                 <Box mt="-1" mr="3">
-                  {!notification.isChecked && (
+                  {!notification.isRead && (
                     <i className="fas fa-circle xs-icon "></i>
                   )}
                 </Box>
