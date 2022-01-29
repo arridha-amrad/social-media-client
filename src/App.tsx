@@ -1,12 +1,13 @@
 import { Box, Spinner } from '@chakra-ui/react';
 import { useState, useEffect, Dispatch } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Routes, Route } from 'react-router-dom';
 import ProtectedRoute from './components/ProtectedRoute';
 import { Home, Login, Register } from './pages';
 import PostDetail from './pages/PostDetail';
-import { AuthActionsType } from './store/types/AuthTypes';
-import { NotificationActionTypes } from './store/types/NotificationTypes';
+import { RootState } from './reduxStore';
+import { AuthActionsType } from './reduxStore/reduxTypes/AuthTypes';
+import { NotificationActionTypes } from './reduxStore/reduxTypes/NotificationTypes';
 import axiosInstance from './utils/AxiosInterceptor';
 
 const App = () => {
@@ -14,6 +15,9 @@ const App = () => {
   const dispatch =
     useDispatch<Dispatch<AuthActionsType | NotificationActionTypes>>();
   const [isLoading, setIsLoading] = useState(true);
+
+  const { socket } = useSelector((state: RootState) => state);
+
   const fetchUser = async () => {
     try {
       dispatch({ type: 'LOADING_AUTH' });
@@ -43,6 +47,17 @@ const App = () => {
     };
     // eslint-disable-next-line
   }, []);
+
+  useEffect(() => {
+    socket?.on('likeCommentAlert', (notification) => {
+      console.log('notifLikeComment : ', notification);
+      dispatch({
+        type: 'ADD_NOTIFICATION',
+        payload: notification,
+      });
+    });
+  }, [socket]);
+
   if (isLoading) {
     return (
       <Box

@@ -8,9 +8,11 @@ export type SocketActionType = { type: typeof SET_SOCKET; payload: Socket };
 interface ServerToClientEvents {
   likeAlert: (data: Notification) => void;
   commentAlert: (notification: Notification) => void;
+  likeCommentAlert: (notification: Notification) => void;
 }
 
 interface ClientToServerEvents {
+  likeComment: (notification: Notification, toUsername: string) => void;
   addUser: (username: string) => void;
   likePost: (notification: Notification, toUsername: string) => void;
   addComment: (notification: Notification, toUsername: string) => void;

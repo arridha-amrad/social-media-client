@@ -9,34 +9,18 @@ import {
   Flex,
   Text,
 } from '@chakra-ui/react';
-import { Dispatch, FC } from 'react';
-import { Comment } from '../store/reducers/PostReducer';
+import { FC } from 'react';
+import { Comment } from '../reduxStore/reducers/PostReducer';
 import Moment from 'react-moment';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../store';
-import { PostActionTypes } from '../store/types/PostTypes';
+import { useSelector } from 'react-redux';
+import { RootState } from '../reduxStore';
 import './components.css';
-import axiosInstance from '../utils/AxiosInterceptor';
 import DeleteCommentButton from './DeleteCommentButton';
+import LikeCommentButton from './LikeCommentButton';
 
 const Comments: FC<{ comments: Comment[] }> = ({ comments }) => {
   const { authenticatedUser } = useSelector((state: RootState) => state.auth);
-  const dispatch = useDispatch<Dispatch<PostActionTypes>>();
-  const likeCommentHandler = async (comment: Comment) => {
-    try {
-      await axiosInstance.post(`/api/comment/like-dislike/${comment._id}`);
-      dispatch({
-        type: 'TOGGLE_LIKE_COMMENT',
-        payload: {
-          commentId: comment._id,
-          postId: comment.post,
-          userId: authenticatedUser!._id,
-        },
-      });
-    } catch (err) {
-      console.log(err);
-    }
-  };
+
   const usernameAndTime = (comment: Comment) => (
     <Flex flexDir="column" alignItems="start">
       <Text fontWeight="bold" fontSize="small">
@@ -63,15 +47,7 @@ const Comments: FC<{ comments: Comment[] }> = ({ comments }) => {
       </Text>
     </Flex>
   );
-  const likeIcon = (comment: Comment, isLiked: () => string | undefined) => (
-    <Box onClick={() => likeCommentHandler(comment)}>
-      {isLiked() ? (
-        <i className="fas fa-heart comment-heart isLiked"></i>
-      ) : (
-        <i className="far fa-heart comment-heart"></i>
-      )}
-    </Box>
-  );
+
   return (
     <>
       <Accordion ml="5" allowToggle>
@@ -114,7 +90,7 @@ const Comments: FC<{ comments: Comment[] }> = ({ comments }) => {
                     </Flex>
                     <Flex flexDir="column" alignItems="flex-end">
                       {showNumberOfLikes(comment)}
-                      {likeIcon(comment, isLiked)}
+                      <LikeCommentButton comment={comment} isLiked={isLiked} />
                     </Flex>
                   </Flex>
                 </Flex>

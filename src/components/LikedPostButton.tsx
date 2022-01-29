@@ -1,9 +1,9 @@
 import { Box, Button } from '@chakra-ui/react';
 import { Dispatch, FC } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../store';
-import { PostData } from '../store/reducers/PostReducer';
-import { PostActionTypes } from '../store/types/PostTypes';
+import { RootState } from '../reduxStore';
+import { PostData } from '../reduxStore/reducers/PostReducer';
+import { PostActionTypes } from '../reduxStore/reduxTypes/PostTypes';
 import axiosInstance from '../utils/AxiosInterceptor';
 import './components.css';
 

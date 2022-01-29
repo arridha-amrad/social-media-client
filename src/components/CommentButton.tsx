@@ -1,8 +1,8 @@
 import { Button } from '@chakra-ui/react';
 import { Dispatch, FC } from 'react';
 import { useDispatch } from 'react-redux';
-import { PostData } from '../store/reducers/PostReducer';
-import { PostActionTypes } from '../store/types/PostTypes';
+import { PostData } from '../reduxStore/reducers/PostReducer';
+import { PostActionTypes } from '../reduxStore/reduxTypes/PostTypes';
 
 const CommentButton: FC<{ post: PostData }> = ({ post }) => {
   const dispatch = useDispatch<Dispatch<PostActionTypes>>();

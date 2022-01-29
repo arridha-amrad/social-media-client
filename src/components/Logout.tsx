@@ -1,6 +1,6 @@
 import { MenuItem } from '@chakra-ui/react';
 import { useDispatch } from 'react-redux';
-import { AuthActionsType } from '../store/types/AuthTypes';
+import { AuthActionsType } from '../reduxStore/reduxTypes/AuthTypes';
 import axiosInstance from '../utils/AxiosInterceptor';
 import { useNavigate } from 'react-router-dom';
 import { Dispatch } from 'react';

@@ -1,7 +1,7 @@
 import { Avatar, Box, Divider, Flex, Text } from '@chakra-ui/react';
 import { FC } from 'react';
 import Moment from 'react-moment';
-import { Notification } from '../store/reducers/NotificationReducer';
+import { Notification } from '../reduxStore/reducers/NotificationReducer';
 
 const NotificationList: FC<{ notifications: Notification[] }> = ({
   notifications,
@@ -90,6 +90,24 @@ const NotificationList: FC<{ notifications: Notification[] }> = ({
                     <Text fontSize="xs">{notification.sender.username}</Text>
                     <Text fontSize="xs">{notification.comment?.body}</Text>
                   </Flex>
+                </Flex>
+              </Flex>
+            )}
+            {notification.type === 'likeComment' && (
+              <Flex ml="5" alignItems="center">
+                <Box>
+                  <i className="fas fa-heart isLiked"></i>
+                </Box>
+                <Flex ml="2" justifyContent="flex-start" alignItems="center">
+                  <>
+                    <Avatar size="xs" src={notification.receiver.avatarURL} />
+                    <Flex ml="3" justifyContent="flex-start" flexDir="column">
+                      <Text fontSize="xs">
+                        {notification.receiver.username}
+                      </Text>
+                      <Text fontSize="xs">{notification.comment?.body}</Text>
+                    </Flex>
+                  </>
                 </Flex>
               </Flex>
             )}

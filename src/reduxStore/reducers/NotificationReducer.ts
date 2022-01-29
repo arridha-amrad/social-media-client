@@ -1,5 +1,5 @@
 import { User } from '../../interfacesAndTypes';
-import { NotificationActionTypes } from '../types/NotificationTypes';
+import { NotificationActionTypes } from '../reduxTypes/NotificationTypes';
 import { PostData } from './PostReducer';
 import { Comment } from './PostReducer';
 
@@ -55,9 +55,14 @@ export default function NotificationReducer(
         notifications: action.payload,
       };
     case 'ADD_NOTIFICATION':
+      const addNotification = () => {
+        const copy = [...state.notifications];
+        copy.splice(0, 0, action.payload);
+        return copy;
+      };
       return {
         ...state,
-        notifications: [...state.notifications, action.payload],
+        notifications: addNotification(),
       };
     default:
       return state;

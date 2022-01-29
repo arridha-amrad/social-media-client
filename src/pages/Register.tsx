@@ -3,8 +3,11 @@ import React, { useState } from 'react';
 import EmailVerification from '../components/EmailVerification';
 import RegisterComponents from '../components/RegisterComponents';
 import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../store';
-import { LOADING_AUTH, STOP_LOADING_AUTH } from '../store/types/AuthTypes';
+import { RootState } from '../reduxStore';
+import {
+  LOADING_AUTH,
+  STOP_LOADING_AUTH,
+} from '../reduxStore/reduxTypes/AuthTypes';
 import axiosInstance from '../utils/AxiosInterceptor';
 
 const Register = () => {

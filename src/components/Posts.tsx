@@ -1,6 +1,6 @@
 import { Box, Container, Flex, Avatar, Text } from '@chakra-ui/react';
 import { useSelector } from 'react-redux';
-import { RootState } from '../store';
+import { RootState } from '../reduxStore';
 import Moment from 'react-moment';
 import LikedButton from './LikedPostButton';
 import DeletePostButton from './DeletePostButton';
@@ -11,7 +11,7 @@ import AddPostCommentBox from './AddPostCommentBox';
 import Comments from './Comments';
 import { useNavigate } from 'react-router-dom';
 import { FC } from 'react';
-import { PostData } from '../store/reducers/PostReducer';
+import { PostData } from '../reduxStore/reducers/PostReducer';
 
 const Posts: FC<{ posts: PostData[] }> = ({ posts }) => {
   const {

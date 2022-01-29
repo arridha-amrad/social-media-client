@@ -1,5 +1,5 @@
 import { User } from '../../interfacesAndTypes';
-import { PostActionTypes } from '../types/PostTypes';
+import { PostActionTypes } from '../reduxTypes/PostTypes';
 
 export interface Comment {
   _id: string;

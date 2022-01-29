@@ -1,7 +1,7 @@
 import { Box, Button, FormControl, Textarea } from '@chakra-ui/react';
 import { Dispatch, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { ADD_POST, PostActionTypes } from '../store/types/PostTypes';
+import { ADD_POST, PostActionTypes } from '../reduxStore/reduxTypes/PostTypes';
 import axiosInstance from '../utils/AxiosInterceptor';
 
 const CreatePost = () => {

@@ -9,7 +9,7 @@ import {
   Text,
 } from '@chakra-ui/react';
 import { useSelector } from 'react-redux';
-import { RootState } from '../store';
+import { RootState } from '../reduxStore';
 import Logout from './Logout';
 import NotificationButton from './NotificationButton';
 

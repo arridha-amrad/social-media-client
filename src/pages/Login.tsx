@@ -13,8 +13,8 @@ import React, { Dispatch, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, Link } from 'react-router-dom';
 import { User } from '../interfacesAndTypes';
-import { RootState } from '../store';
-import { AuthActionsType } from '../store/types/AuthTypes';
+import { RootState } from '../reduxStore';
+import { AuthActionsType } from '../reduxStore/reduxTypes/AuthTypes';
 import axiosInstance from '../utils/AxiosInterceptor';
 import getGoogleOauthURL from '../utils/GetGoogleOAuthURL';
 

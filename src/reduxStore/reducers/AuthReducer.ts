@@ -1,5 +1,5 @@
 import { User } from '../../interfacesAndTypes';
-import { AuthActionsType } from '../types/AuthTypes';
+import { AuthActionsType } from '../reduxTypes/AuthTypes';
 
 export interface AuthState {
   isLoadingAuth: boolean;

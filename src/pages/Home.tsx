@@ -1,15 +1,15 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../store';
+import { RootState } from '../reduxStore';
 import { Box, Container, Flex, Spinner } from '@chakra-ui/react';
 import { Dispatch, useEffect, useState } from 'react';
 import CreatePost from '../components/CreatePost';
 import Posts from '../components/Posts';
 import axiosInstance from '../utils/AxiosInterceptor';
-import { PostActionTypes } from '../store/types/PostTypes';
-import { PostData } from '../store/reducers/PostReducer';
+import { PostActionTypes } from '../reduxStore/reduxTypes/PostTypes';
+import { PostData } from '../reduxStore/reducers/PostReducer';
 import { io } from 'socket.io-client';
-import { SocketActionType } from '../store/reducers/SocketReducer';
-import { NotificationActionTypes } from '../store/types/NotificationTypes';
+import { SocketActionType } from '../reduxStore/reducers/SocketReducer';
+import { NotificationActionTypes } from '../reduxStore/reduxTypes/NotificationTypes';
 
 const Home = () => {
   const {

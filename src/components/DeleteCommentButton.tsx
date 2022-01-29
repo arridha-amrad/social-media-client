@@ -1,8 +1,8 @@
 import { Box, Tooltip } from '@chakra-ui/react';
 import { Dispatch, FC, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { Comment } from '../store/reducers/PostReducer';
-import { PostActionTypes } from '../store/types/PostTypes';
+import { Comment } from '../reduxStore/reducers/PostReducer';
+import { PostActionTypes } from '../reduxStore/reduxTypes/PostTypes';
 import axiosInstance from '../utils/AxiosInterceptor';
 import './components.css';
 import GlobalAlertDialog from './GlobalAlertDialog';
