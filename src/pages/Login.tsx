@@ -76,7 +76,7 @@ const Login = () => {
     // eslint-disable-next-line
   }, []);
   const openGoogleOauth = () => {
-    window.open(getGoogleOauthURL(), '_blank');
+    window.open(getGoogleOauthURL(), '_self');
   };
   const openFacebookOauth = () => {
     window.open('http://localhost:5000/api/facebook/login', '_blank');

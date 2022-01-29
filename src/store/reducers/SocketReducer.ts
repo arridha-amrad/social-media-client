@@ -7,11 +7,13 @@ export type SocketActionType = { type: typeof SET_SOCKET; payload: Socket };
 
 interface ServerToClientEvents {
   likeAlert: (data: Notification) => void;
+  commentAlert: (notification: Notification) => void;
 }
 
 interface ClientToServerEvents {
   addUser: (username: string) => void;
   likePost: (notification: Notification, toUsername: string) => void;
+  addComment: (notification: Notification, toUsername: string) => void;
 }
 
 const initialState: Socket<ServerToClientEvents, ClientToServerEvents> | null =

@@ -2,8 +2,16 @@
   color: pink !important;
 }
 
+.rotation {
+  transform: rotate(180deg);
+}
+
+.comment-notification {
+  color: rgb(12, 151, 65);
+}
+
 .xs-icon {
-  font-size: .4rem;
+  font-size: 0.4rem;
   color: rgb(0, 174, 255);
 }
 

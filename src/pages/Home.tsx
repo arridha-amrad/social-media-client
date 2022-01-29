@@ -70,6 +70,13 @@ const Home = () => {
         payload: payload,
       });
     });
+    socket?.on('commentAlert', (payload) => {
+      console.log('comment payload : ', payload);
+      dispatch({
+        type: 'ADD_NOTIFICATION',
+        payload,
+      });
+    });
   }, [socket]);
 
   const loading = () => (

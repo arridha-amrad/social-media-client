@@ -1,6 +1,7 @@
 import { User } from '../../interfacesAndTypes';
 import { NotificationActionTypes } from '../types/NotificationTypes';
 import { PostData } from './PostReducer';
+import { Comment } from './PostReducer';
 
 export interface NotificationSender {
   _id: string;

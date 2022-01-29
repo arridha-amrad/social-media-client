@@ -15,6 +15,7 @@ const NotificationList: FC<{ notifications: Notification[] }> = ({
       right="0"
       w="lg"
       maxH="lg"
+      overflowY="auto"
       p="3"
       shadow="md"
     >
@@ -35,7 +36,9 @@ const NotificationList: FC<{ notifications: Notification[] }> = ({
             <Flex justifyContent="space-between">
               <Flex mb="2" alignItems={'center'}>
                 <Box mt="-1" mr="3">
-                  <i className="fas fa-circle xs-icon "></i>
+                  {!notification.isChecked && (
+                    <i className="fas fa-circle xs-icon "></i>
+                  )}
                 </Box>
                 <Text fontSize="sm">{message}</Text>
               </Flex>
@@ -43,12 +46,12 @@ const NotificationList: FC<{ notifications: Notification[] }> = ({
                 <Moment fromNow>{notification.createdAt}</Moment>
               </Text>
             </Flex>
-            <Flex ml="5" alignItems="center">
-              <Box>
-                <i className="fas fa-heart isLiked"></i>
-              </Box>
-              <Flex ml="2" justifyContent="flex-start" alignItems="center">
-                {notification.type === 'likePost' && (
+            {notification.type === 'likePost' && (
+              <Flex ml="5" alignItems="center">
+                <Box>
+                  <i className="fas fa-heart isLiked"></i>
+                </Box>
+                <Flex ml="2" justifyContent="flex-start" alignItems="center">
                   <>
                     <Avatar
                       size="xs"
@@ -63,10 +66,36 @@ const NotificationList: FC<{ notifications: Notification[] }> = ({
                       </Text>
                     </Flex>
                   </>
-                )}
+                </Flex>
               </Flex>
-            </Flex>
-            {notifications.length > 1 && <Divider my="2" />}
+            )}
+            {notification.type === 'commentPost' && (
+              <Flex ml="5" flexDir="column">
+                <Flex alignItems="center">
+                  <Box mr="2">
+                    <i className="fas fa-comment-alt comment-notification"></i>
+                  </Box>
+                  <Avatar size="xs" src={notification.receiver.avatarURL} />
+                  <Flex ml="3" justifyContent="flex-start" flexDir="column">
+                    <Text fontSize="xs">{notification.receiver.username}</Text>
+                    <Text fontSize="xs">{notification.post?.description}</Text>
+                  </Flex>
+                </Flex>
+                <Flex ml="8" alignItems="center">
+                  <Box mr="2">
+                    <i className="fas fa-reply rotation"></i>
+                  </Box>
+                  <Avatar size="xs" src={notification.sender.avatarURL} />
+                  <Flex ml="3" justifyContent="flex-start" flexDir="column">
+                    <Text fontSize="xs">{notification.sender.username}</Text>
+                    <Text fontSize="xs">{notification.comment?.body}</Text>
+                  </Flex>
+                </Flex>
+              </Flex>
+            )}
+            {notifications.length > 1 && i + 1 !== notifications.length && (
+              <Divider my="2" />
+            )}
           </Box>
         );
       })}

@@ -13,7 +13,10 @@ import { PostActionTypes } from '../store/types/PostTypes';
 import axiosInstance from '../utils/AxiosInterceptor';
 
 const AddPostCommentBox: FC<{ post: PostData }> = ({ post }) => {
-  const { isLoadingComment } = useSelector((state: RootState) => state.posts);
+  const {
+    posts: { isLoadingComment },
+    socket,
+  } = useSelector((state: RootState) => state);
   const [comment, setComment] = useState('');
   const dispatch = useDispatch<Dispatch<PostActionTypes>>();
   const ref = useRef<HTMLTextAreaElement>(null);
@@ -32,6 +35,9 @@ const AddPostCommentBox: FC<{ post: PostData }> = ({ post }) => {
           comment: data.comment,
         },
       });
+      if (data.notification) {
+        socket?.emit('addComment', data.notification, post.owner.username);
+      }
     } catch (err) {
       console.log(err);
     } finally {
