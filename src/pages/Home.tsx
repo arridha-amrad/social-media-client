@@ -25,7 +25,7 @@ const Home = () => {
       Dispatch<PostActionTypes | SocketActionType | NotificationActionTypes>
     >();
 
-  const fetchPosts = async () => {
+  async function fetchPosts() {
     try {
       dispatch({ type: 'LOADING_POST' });
       const { data } = await axiosInstance.get('/api/post');
@@ -41,7 +41,7 @@ const Home = () => {
     } finally {
       dispatch({ type: 'STOP_LOADING_POST' });
     }
-  };
+  }
   useEffect(() => {
     if (!isFetched) {
       fetchPosts();

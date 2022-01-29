@@ -53,13 +53,10 @@ const NotificationList: FC<{ notifications: Notification[] }> = ({
                 </Box>
                 <Flex ml="2" justifyContent="flex-start" alignItems="center">
                   <>
-                    <Avatar
-                      size="xs"
-                      src={notification.post?.owner.avatarURL}
-                    />
+                    <Avatar size="xs" src={notification.receiver.avatarURL} />
                     <Flex ml="3" justifyContent="flex-start" flexDir="column">
                       <Text fontSize="xs">
-                        {notification.post?.owner.username}
+                        {notification.receiver.username}
                       </Text>
                       <Text fontSize="xs">
                         {notification.post?.description}

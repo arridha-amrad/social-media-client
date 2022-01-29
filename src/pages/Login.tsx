@@ -15,13 +15,16 @@ import { useNavigate, Link } from 'react-router-dom';
 import { RootState } from '../reduxStore';
 import { AuthActionsType } from '../reduxStore/reduxTypes/AuthTypes';
 import { NotificationActionTypes } from '../reduxStore/reduxTypes/NotificationTypes';
+import { PostActionTypes } from '../reduxStore/reduxTypes/PostTypes';
 import axiosInstance from '../utils/AxiosInterceptor';
 import getGoogleOauthURL from '../utils/GetGoogleOAuthURL';
 
 const Login = () => {
   const navigate = useNavigate();
   const dispatch =
-    useDispatch<Dispatch<AuthActionsType | NotificationActionTypes>>();
+    useDispatch<
+      Dispatch<AuthActionsType | NotificationActionTypes | PostActionTypes>
+    >();
   const [message, setMessage] = useState('');
   const [urlNextParam, setURLNextParam] = useState('');
   const { isLoadingAuth, isAuthenticated, authMessage } = useSelector(
@@ -51,6 +54,10 @@ const Login = () => {
       dispatch({
         type: 'SET_NOTIFICATIONS',
         payload: data.notifications,
+      });
+      dispatch({
+        type: 'ADD_POSTS',
+        payload: data.posts,
       });
       if (urlNextParam) {
         navigate(`${urlNextParam}`);
