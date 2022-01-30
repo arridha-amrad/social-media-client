@@ -91,7 +91,7 @@ const Login = () => {
     window.open(getGoogleOauthURL(), '_self');
   };
   const openFacebookOauth = () => {
-    window.open('http://localhost:5000/api/facebook/login', '_blank');
+    window.open('http://localhost:5000/api/facebook/login', '_self');
   };
   return (
     <Container>

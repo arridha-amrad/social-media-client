@@ -55,8 +55,8 @@ const NotificationList: FC<{ notifications: Notification[] }> = ({
                   <>
                     <Avatar size="xs" src={notification.receiver.avatarURL} />
                     <Flex ml="3" justifyContent="flex-start" flexDir="column">
-                      <Text fontSize="xs">
-                        {notification.receiver.username}
+                      <Text fontWeight="medium" fontSize="xs">
+                        you
                       </Text>
                       <Text fontSize="xs">
                         {notification.post?.description}
@@ -74,7 +74,9 @@ const NotificationList: FC<{ notifications: Notification[] }> = ({
                   </Box>
                   <Avatar size="xs" src={notification.receiver.avatarURL} />
                   <Flex ml="3" justifyContent="flex-start" flexDir="column">
-                    <Text fontSize="xs">{notification.receiver.username}</Text>
+                    <Text fontWeight="medium" fontSize="xs">
+                      you
+                    </Text>
                     <Text fontSize="xs">{notification.post?.description}</Text>
                   </Flex>
                 </Flex>
@@ -99,8 +101,8 @@ const NotificationList: FC<{ notifications: Notification[] }> = ({
                   <>
                     <Avatar size="xs" src={notification.receiver.avatarURL} />
                     <Flex ml="3" justifyContent="flex-start" flexDir="column">
-                      <Text fontSize="xs">
-                        {notification.receiver.username}
+                      <Text fontWeight="medium" fontSize="xs">
+                        you
                       </Text>
                       <Text fontSize="xs">{notification.comment?.body}</Text>
                     </Flex>
