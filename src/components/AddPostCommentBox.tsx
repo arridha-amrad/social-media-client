@@ -7,6 +7,7 @@ import {
 } from '@chakra-ui/react';
 import { Dispatch, FC, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useSearchParams } from 'react-router-dom';
 import { RootState } from '../reduxStore';
 import { PostData } from '../reduxStore/reducers/PostReducer';
 import { PostActionTypes } from '../reduxStore/reduxTypes/PostTypes';
@@ -20,6 +21,8 @@ const AddPostCommentBox: FC<{ post: PostData }> = ({ post }) => {
   const [comment, setComment] = useState('');
   const dispatch = useDispatch<Dispatch<PostActionTypes>>();
   const ref = useRef<HTMLTextAreaElement>(null);
+  const [setSearchParam] = useSearchParams();
+  const postIdFromParam = setSearchParam.get('id');
   const sendCommentHandler = async () => {
     try {
       dispatch({
@@ -28,13 +31,20 @@ const AddPostCommentBox: FC<{ post: PostData }> = ({ post }) => {
       const { data } = await axiosInstance.post(`/api/comment/${post._id}`, {
         body: comment,
       });
-      dispatch({
-        type: 'ADD_COMMENT',
-        payload: {
-          postId: post._id,
-          comment: data.comment,
-        },
-      });
+      if (postIdFromParam) {
+        dispatch({
+          type: 'ADD_COMMENT_FROM_DETAIL_POST_PAGE',
+          payload: data.comment,
+        });
+      } else {
+        dispatch({
+          type: 'ADD_COMMENT',
+          payload: {
+            postId: post._id,
+            comment: data.comment,
+          },
+        });
+      }
       if (data.notification) {
         socket?.emit('addComment', data.notification, post.owner.username);
       }

@@ -50,7 +50,6 @@ const App = () => {
 
   useEffect(() => {
     socket?.on('likeCommentAlert', (notification) => {
-      console.log('notifLikeComment : ', notification);
       dispatch({
         type: 'ADD_NOTIFICATION',
         payload: notification,

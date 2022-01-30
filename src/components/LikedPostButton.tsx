@@ -1,6 +1,7 @@
 import { Box, Button } from '@chakra-ui/react';
 import { Dispatch, FC } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useSearchParams } from 'react-router-dom';
 import { RootState } from '../reduxStore';
 import { PostData } from '../reduxStore/reducers/PostReducer';
 import { PostActionTypes } from '../reduxStore/reduxTypes/PostTypes';
@@ -15,8 +16,12 @@ const LikedPostButton: FC<{ post: PostData }> = ({ post }) => {
 
   const dispatch = useDispatch<Dispatch<PostActionTypes>>();
   const isLiked = post.likes.find(
-    (userId) => userId === authenticatedUser?._id
+    (user) => user._id === authenticatedUser?._id
   );
+
+  const [searchParam] = useSearchParams();
+  const postIdFromParam = searchParam.get('id');
+
   const handleLike = async () => {
     try {
       // no notification if loginUser like his own post
@@ -39,13 +44,20 @@ const LikedPostButton: FC<{ post: PostData }> = ({ post }) => {
         }
       }
       await axiosInstance.post(`/api/post/like-dislike/${post._id}`);
-      dispatch({
-        type: 'LIKE_POST_OR_DISLIKE',
-        payload: {
-          postId: post._id,
-          userId: authenticatedUser!._id,
-        },
-      });
+      if (postIdFromParam) {
+        dispatch({
+          type: 'TOGGLE_LIKE_POST_FROM_DETAIL_POST_PAGE',
+          payload: authenticatedUser!,
+        });
+      } else {
+        dispatch({
+          type: 'LIKE_POST_OR_DISLIKE',
+          payload: {
+            postId: post._id,
+            user: authenticatedUser!,
+          },
+        });
+      }
     } catch (err) {
       console.log(err);
     }

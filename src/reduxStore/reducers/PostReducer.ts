@@ -5,7 +5,7 @@ export interface Comment {
   _id: string;
   body: string;
   owner: User;
-  likes: string[];
+  likes: User[];
   post: string;
   createdAt: string;
   updatedAt: string;
@@ -16,7 +16,7 @@ export interface PostData {
   description: string;
   owner: User;
   comments: Comment[];
-  likes: string[]; // filled by userId: string
+  likes: User[];
   createdAt: Date;
   updatedAt: Date;
   isEdit: boolean;
@@ -25,6 +25,7 @@ export interface PostData {
 }
 
 export interface PostState {
+  post: PostData | null;
   posts: PostData[];
   isLoadingPost: boolean;
   isFetched: boolean;
@@ -32,6 +33,7 @@ export interface PostState {
 }
 
 const initialState: PostState = {
+  post: null,
   posts: [],
   isFetched: false,
   isLoadingPost: false,
@@ -42,8 +44,9 @@ export default function PostReducer(
   state = initialState,
   action: PostActionTypes
 ): PostState {
-  const { posts } = state;
+  const { posts, post } = state;
   const postsCopy = [...posts];
+  const postCopy = { ...post };
   const findPostIndex = (postId: string) => {
     return posts.findIndex((post) => post._id === postId);
   };
@@ -82,19 +85,90 @@ export default function PostReducer(
         ...state,
         isLoadingPost: false,
       };
+    case 'SET_POST_FROM_DETAIL_POST_PAGE':
+      return {
+        ...state,
+        post: action.payload,
+      };
+
+    case 'TOGGLE_LIKE_COMMENT_FROM_DETAIL_POST_PAGE':
+      const { user, commentId } = action.payload;
+      const toggleLikeComment = () => {
+        const commentIndex = postCopy.comments?.findIndex(
+          (comment) => comment._id === commentId
+        );
+        const isLiked = postCopy.comments![commentIndex!].likes.find(
+          (likeUser) => likeUser._id === user._id
+        );
+        if (isLiked) {
+          postCopy.comments![commentIndex!].likes = postCopy.comments![
+            commentIndex!
+          ].likes.filter((likeUser) => likeUser._id !== user._id);
+        } else {
+          postCopy.comments![commentIndex!].likes.push(user);
+        }
+        return postCopy as PostData;
+      };
+      return {
+        ...state,
+        post: toggleLikeComment(),
+      };
+
+    case 'DELETE_COMMENT_FROM_DETAIL_POST_PAGE':
+      const removeComment = () => {
+        const filteredComments = postCopy.comments?.filter(
+          (comment) => comment._id !== action.payload.commentId
+        );
+        postCopy.comments = filteredComments;
+        return postCopy as PostData;
+      };
+      return {
+        ...state,
+        post: removeComment(),
+      };
+
+    case 'TOGGLE_LIKE_POST_FROM_DETAIL_POST_PAGE':
+      const likePost = () => {
+        const user = action.payload;
+        const isLiked = post?.likes.find(
+          (likeUser) => likeUser._id === user._id
+        );
+        if (isLiked) {
+          const likes = post?.likes.filter(
+            (likeUser) => likeUser._id !== user._id
+          );
+          postCopy.likes = likes;
+        } else {
+          postCopy.likes!.push(action.payload);
+        }
+        return postCopy as PostData;
+      };
+      return {
+        ...state,
+        post: likePost(),
+      };
+    case 'ADD_COMMENT_FROM_DETAIL_POST_PAGE':
+      const setComment = () => {
+        postCopy.comments?.splice(0, 0, action.payload);
+        return postCopy as PostData;
+      };
+      return {
+        ...state,
+        post: setComment(),
+      };
     case 'LIKE_POST_OR_DISLIKE':
       const likeOrDislike = () => {
         const postIndex = findPostIndex(action.payload.postId);
         const isLiked = posts[postIndex].likes.find(
-          (userId) => userId === action.payload.userId
+          (user) => user._id === action.payload.user._id
         );
         if (isLiked) {
           const filteredPost = postsCopy[postIndex].likes.filter(
-            (userId) => userId !== action.payload.userId
+            (user) => user._id !== action.payload.user._id
           );
           postsCopy[postIndex].likes = filteredPost;
         } else {
-          postsCopy[postIndex].likes.push(action.payload.userId);
+          postsCopy[postIndex].likes.push(action.payload.user);
         }
         return postsCopy;
       };
@@ -149,19 +223,19 @@ export default function PostReducer(
       };
     case 'TOGGLE_LIKE_COMMENT':
       const likeComment = () => {
-        const { commentId, postId, userId } = action.payload;
+        const { commentId, postId, user } = action.payload;
         const postIndex = findPostIndex(postId);
         const commentIndex = findCommentIndex(posts[postIndex], commentId);
         const isLiked = postsCopy[postIndex].comments[commentIndex].likes.find(
-          (like) => like === userId
+          (likeUser) => likeUser._id === user._id
         );
         if (isLiked) {
           const filteredLikes = postsCopy[postIndex].comments[
             commentIndex
-          ].likes.filter((like) => like !== userId);
+          ].likes.filter((likeUser) => likeUser._id !== user._id);
           postsCopy[postIndex].comments[commentIndex].likes = filteredLikes;
         } else {
-          postsCopy[postIndex].comments[commentIndex].likes.push(userId);
+          postsCopy[postIndex].comments[commentIndex].likes.push(user);
         }
         return postsCopy;
       };

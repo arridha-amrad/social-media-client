@@ -4,7 +4,9 @@ import { useDispatch } from 'react-redux';
 import { PostData } from '../reduxStore/reducers/PostReducer';
 import { PostActionTypes } from '../reduxStore/reduxTypes/PostTypes';
 
-const CommentButton: FC<{ post: PostData }> = ({ post }) => {
+const CommentButton: FC<{
+  post: PostData;
+}> = ({ post }) => {
   const dispatch = useDispatch<Dispatch<PostActionTypes>>();
   const toggleCommentButton = () => {
     dispatch({

@@ -35,7 +35,11 @@ const Posts: FC<{ posts: PostData[] }> = ({ posts }) => {
                 <Avatar src={post.owner.avatarURL} />
                 <Flex flexDir="column" justify="flex-start" width="100%">
                   <Flex>
-                    <Box ml="5">{post.owner.username}</Box>
+                    <Text fontWeight="semibold" ml="5">
+                      {post.owner.username === authenticatedUser?.username
+                        ? 'You'
+                        : post.owner.username}
+                    </Text>
                     {post.owner._id === authenticatedUser?._id && (
                       <>
                         <EditPostButton post={post} />

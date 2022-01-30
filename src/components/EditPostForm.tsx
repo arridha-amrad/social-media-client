@@ -16,7 +16,6 @@ const EditPostForm: FC<{ post: PostData }> = ({ post }) => {
       payload: { postId: post._id },
     });
     try {
-      dispatch({ type: 'LOADING_POST' });
       const { data } = await axiosInstance.put(`/api/post/${post._id}`, {
         description,
       });
@@ -28,10 +27,6 @@ const EditPostForm: FC<{ post: PostData }> = ({ post }) => {
       }
     } catch (err) {
       console.log(err);
-    } finally {
-      dispatch({
-        type: 'STOP_LOADING_POST',
-      });
     }
   };
   return (
@@ -50,7 +45,7 @@ const EditPostForm: FC<{ post: PostData }> = ({ post }) => {
           onClick={updatePostHandler}
           colorScheme="blue"
         >
-          {isLoadingPost ? 'Loading' : 'Update'}
+          Update
         </Button>
       </Flex>
     </Box>

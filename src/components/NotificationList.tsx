@@ -1,11 +1,14 @@
 import { Avatar, Box, Divider, Flex, Text } from '@chakra-ui/react';
 import { FC } from 'react';
 import Moment from 'react-moment';
+import { useNavigate } from 'react-router-dom';
 import { Notification } from '../reduxStore/reducers/NotificationReducer';
 
-const NotificationList: FC<{ notifications: Notification[] }> = ({
-  notifications,
-}) => {
+const NotificationList: FC<{
+  notifications: Notification[];
+  setClose: () => void;
+}> = ({ notifications, setClose }) => {
+  const navigate = useNavigate();
   return (
     <Box
       bg="white"
@@ -22,6 +25,7 @@ const NotificationList: FC<{ notifications: Notification[] }> = ({
       {notifications.map((notification, i) => {
         const senderName = notification.sender.username;
         let message;
+        let link = `/post?id=${notification.post?._id}&commentId=${notification.comment?._id}`;
         if (notification.type === 'commentPost') {
           message = `${senderName} comment your post`;
         }
@@ -30,6 +34,7 @@ const NotificationList: FC<{ notifications: Notification[] }> = ({
         }
         if (notification.type === 'likePost') {
           message = `${senderName} like your post`;
+          link = `/post?id=${notification.post?._id}`;
         }
         return (
           <Box key={i}>
@@ -40,7 +45,17 @@ const NotificationList: FC<{ notifications: Notification[] }> = ({
                     <i className="fas fa-circle xs-icon "></i>
                   )}
                 </Box>
-                <Text fontSize="sm">{message}</Text>
+                <Text
+                  _hover={{ color: 'blue', textDecoration: 'underline' }}
+                  cursor="pointer"
+                  onClick={() => {
+                    navigate(link);
+                    setClose();
+                  }}
+                  fontSize="sm"
+                >
+                  {message}
+                </Text>
               </Flex>
               <Text fontSize="sm" color="gray">
                 <Moment fromNow>{notification.createdAt}</Moment>

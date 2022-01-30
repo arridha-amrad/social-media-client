@@ -61,7 +61,10 @@ const NotificationButton = () => {
         </Button>
       </Tooltip>
       {notifications.length > 0 && isOpen && (
-        <NotificationList notifications={notifications} />
+        <NotificationList
+          setClose={() => setIsOpen(false)}
+          notifications={notifications}
+        />
       )}
     </Box>
   );

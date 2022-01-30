@@ -9,6 +9,7 @@ import {
   Text,
 } from '@chakra-ui/react';
 import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { RootState } from '../reduxStore';
 import Logout from './Logout';
 import NotificationButton from './NotificationButton';
@@ -26,9 +27,11 @@ const Navbar = () => {
         size=""
       >
         <Box>
-          <Text fontSize="large" fontWeight="bold" color="black">
-            Social Media
-          </Text>
+          <Link to="/">
+            <Text fontSize="large" fontWeight="bold" color="black">
+              Social Media
+            </Text>
+          </Link>
         </Box>
         <Flex alignItems="center" gap="20">
           <NotificationButton />
