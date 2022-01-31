@@ -2,7 +2,7 @@ import { Avatar, Box, Container, Flex, Text } from '@chakra-ui/react';
 import { Dispatch, useEffect } from 'react';
 import Moment from 'react-moment';
 import { useDispatch, useSelector } from 'react-redux';
-import { useSearchParams } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import AddPostCommentBox from '../components/AddPostCommentBox';
 import CommentButton from '../components/CommentButton';
 import Comments from '../components/Comments';
@@ -20,6 +20,7 @@ const PostDetail = () => {
   const dispatch = useDispatch<Dispatch<PostActionTypes>>();
   const postId = searchParams.get('id');
   const commentId = searchParams.get('commentId');
+  const navigate = useNavigate();
 
   const fetchPost = async () => {
     try {
@@ -28,6 +29,9 @@ const PostDetail = () => {
         type: 'SET_POST_FROM_DETAIL_POST_PAGE',
         payload: data.post,
       });
+      if (!data.post) {
+        navigate('/');
+      }
     } catch (err) {
       console.log(err);
     }
@@ -80,8 +84,8 @@ const PostDetail = () => {
               )}
               <Box ml="5">
                 <LikedPostButton post={post} />
-                <CommentButton post={post} />
-                {postId && (
+                {!postId && <CommentButton post={post} />}
+                {postId && post.likes.length > 0 && (
                   <Box mt="2" fontSize="sm">
                     liked by
                     <Text d="inline" ml="1" fontWeight="semibold">

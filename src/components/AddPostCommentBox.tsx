@@ -7,7 +7,7 @@ import {
 } from '@chakra-ui/react';
 import { Dispatch, FC, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useSearchParams } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { RootState } from '../reduxStore';
 import { PostData } from '../reduxStore/reducers/PostReducer';
 import { PostActionTypes } from '../reduxStore/reduxTypes/PostTypes';
@@ -23,6 +23,7 @@ const AddPostCommentBox: FC<{ post: PostData }> = ({ post }) => {
   const ref = useRef<HTMLTextAreaElement>(null);
   const [setSearchParam] = useSearchParams();
   const postIdFromParam = setSearchParam.get('id');
+  const navigate = useNavigate();
   const sendCommentHandler = async () => {
     try {
       dispatch({
@@ -48,8 +49,15 @@ const AddPostCommentBox: FC<{ post: PostData }> = ({ post }) => {
       if (data.notification) {
         socket?.emit('addComment', data.notification, post.owner.username);
       }
-    } catch (err) {
+    } catch (err: any) {
       console.log(err);
+      if (err.response.status === 404) {
+        navigate('/');
+        dispatch({
+          type: 'DELETE_POST',
+          payload: { postId: post._id },
+        });
+      }
     } finally {
       dispatch({
         type: 'STOP_LOADING_COMMENT',

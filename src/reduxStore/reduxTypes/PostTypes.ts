@@ -1,5 +1,6 @@
 import { User } from '../../interfacesAndTypes';
 import { Comment, PostData } from '../reducers/PostReducer';
+
 export const LOADING_POST = 'LOADING_POST';
 export const STOP_LOADING_POST = 'STOP_LOADING_POST';
 export const ADD_POSTS = 'ADD_POSTS';
